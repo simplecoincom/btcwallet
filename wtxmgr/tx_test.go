@@ -18,7 +18,7 @@ import (
 	"github.com/btcsuite/btcd/wire"
 	"github.com/btcsuite/btcutil"
 	"github.com/btcsuite/btcwallet/walletdb"
-	_ "github.com/btcsuite/btcwallet/walletdb/bdb"
+	_ "github.com/btcsuite/btcwallet/walletdb/ldb"
 	"github.com/lightningnetwork/lnd/clock"
 )
 
@@ -52,7 +52,7 @@ func testDB() (walletdb.DB, func(), error) {
 	if err != nil {
 		return nil, func() {}, err
 	}
-	db, err := walletdb.Create("bdb", filepath.Join(tmpDir, "db"), true)
+	db, err := walletdb.Create("ldb", filepath.Join(tmpDir, "db"), true)
 	return db, func() { os.RemoveAll(tmpDir) }, err
 }
 
@@ -64,7 +64,7 @@ func testStore() (*Store, walletdb.DB, func(), error) {
 		return nil, nil, func() {}, err
 	}
 
-	db, err := walletdb.Create("bdb", filepath.Join(tmpDir, "db"), true)
+	db, err := walletdb.Create("ldb", filepath.Join(tmpDir, "db"), true)
 	if err != nil {
 		os.RemoveAll(tmpDir)
 		return nil, nil, nil, err

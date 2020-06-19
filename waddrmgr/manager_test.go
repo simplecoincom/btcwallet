@@ -1674,6 +1674,7 @@ func testConvertWatchingOnly(tc *testContext) bool {
 		tc.t.Errorf("%v", err)
 		return false
 	}
+	// This doesn't work with LDB yet.
 	if err := tc.db.Copy(fi); err != nil {
 		fi.Close()
 		tc.t.Errorf("%v", err)
@@ -1683,7 +1684,7 @@ func testConvertWatchingOnly(tc *testContext) bool {
 	defer os.Remove(woMgrName)
 
 	// Open the new database copy and get the address manager namespace.
-	db, err := walletdb.Open("bdb", woMgrName, true)
+	db, err := walletdb.Open("ldb", woMgrName, true)
 	if err != nil {
 		tc.t.Errorf("openDbNamespace: unexpected error: %v", err)
 		return false
