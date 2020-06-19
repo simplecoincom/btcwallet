@@ -182,13 +182,13 @@ func (l *Loader) createNewWallet(pubPassphrase, privPassphrase,
 	if l.localDB {
 		dbPath := filepath.Join(l.dbDirPath, WalletDBName)
 
-		// Create the wallet database backed by bolt db.
+		// Create the wallet database backed by leveldb.
 		err = os.MkdirAll(l.dbDirPath, 0700)
 		if err != nil {
 			return nil, err
 		}
 		l.db, err = walletdb.Create(
-			"bdb", dbPath, l.noFreelistSync, l.timeout,
+			"ldb", dbPath, l.noFreelistSync, l.timeout,
 		)
 		if err != nil {
 			return nil, err
@@ -250,10 +250,10 @@ func (l *Loader) OpenExistingWallet(pubPassphrase []byte, canConsolePrompt bool)
 			return nil, err
 		}
 
-		// Open the database using the boltdb backend.
+		// Open the database using the leveldb backend.
 		dbPath := filepath.Join(l.dbDirPath, WalletDBName)
 		l.db, err = walletdb.Open(
-			"bdb", dbPath, l.noFreelistSync, l.timeout,
+			"ldb", dbPath, l.noFreelistSync, l.timeout,
 		)
 		if err != nil {
 			log.Errorf("Failed to open database: %v", err)

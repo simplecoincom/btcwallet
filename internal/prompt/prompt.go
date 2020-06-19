@@ -16,7 +16,6 @@ import (
 
 	"github.com/btcsuite/btcutil/hdkeychain"
 	"github.com/btcsuite/btcwallet/internal/legacy/keystore"
-	"golang.org/x/crypto/ssh/terminal"
 )
 
 // ProvideSeed is used to prompt for the wallet seed which maybe required during
@@ -52,7 +51,7 @@ func ProvidePrivPassphrase() ([]byte, error) {
 	prompt := "Enter the private passphrase of your wallet: "
 	for {
 		fmt.Print(prompt)
-		pass, err := terminal.ReadPassword(int(os.Stdin.Fd()))
+		pass, err := readPassword()
 		if err != nil {
 			return nil, err
 		}
@@ -123,7 +122,7 @@ func promptPass(_ *bufio.Reader, prefix string, confirm bool) ([]byte, error) {
 	prompt := fmt.Sprintf("%s: ", prefix)
 	for {
 		fmt.Print(prompt)
-		pass, err := terminal.ReadPassword(int(os.Stdin.Fd()))
+		pass, err := readPassword()
 		if err != nil {
 			return nil, err
 		}
@@ -138,7 +137,7 @@ func promptPass(_ *bufio.Reader, prefix string, confirm bool) ([]byte, error) {
 		}
 
 		fmt.Print("Confirm passphrase: ")
-		confirm, err := terminal.ReadPassword(int(os.Stdin.Fd()))
+		confirm, err := readPassword()
 		if err != nil {
 			return nil, err
 		}

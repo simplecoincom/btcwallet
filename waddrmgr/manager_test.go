@@ -1665,6 +1665,7 @@ func testConvertWatchingOnly(tc *testContext) bool {
 		tc.t.Errorf("%v", err)
 		return false
 	}
+	// This doesn't work with LDB yet.
 	if err := tc.db.Copy(fi); err != nil {
 		fi.Close()
 		tc.t.Errorf("%v", err)

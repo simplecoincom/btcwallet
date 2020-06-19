@@ -18,7 +18,7 @@ import (
 	"github.com/btcsuite/btcd/wire"
 	"github.com/btcsuite/btcutil"
 	"github.com/btcsuite/btcwallet/walletdb"
-	_ "github.com/btcsuite/btcwallet/walletdb/bdb"
+	_ "github.com/btcsuite/btcwallet/walletdb/ldb"
 	"github.com/lightningnetwork/lnd/clock"
 )
 
@@ -57,7 +57,7 @@ func testDB() (walletdb.DB, func(), error) {
 		return nil, func() {}, err
 	}
 	db, err := walletdb.Create(
-		"bdb", filepath.Join(tmpDir, "db"), true, defaultDBTimeout,
+		"ldb", filepath.Join(tmpDir, "db"), true, defaultDBTimeout,
 	)
 	return db, func() { os.RemoveAll(tmpDir) }, err
 }
@@ -70,9 +70,13 @@ func testStore() (*Store, walletdb.DB, func(), error) {
 		return nil, nil, func() {}, err
 	}
 
+<<<<<<< HEAD
 	db, err := walletdb.Create(
 		"bdb", filepath.Join(tmpDir, "db"), true, defaultDBTimeout,
 	)
+=======
+	db, err := walletdb.Create("ldb", filepath.Join(tmpDir, "db"), true)
+>>>>>>> 2ad367e... use ldb and allow wasm password read from stdin
 	if err != nil {
 		os.RemoveAll(tmpDir)
 		return nil, nil, nil, err
