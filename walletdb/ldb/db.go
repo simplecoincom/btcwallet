@@ -852,7 +852,7 @@ func (tx *transaction) close() {
 }
 
 func (tx *transaction) CreateTopLevelBucket(key []byte) (walletdb.ReadWriteBucket, error) {
-	return tx.metaBucket.CreateBucket(key)
+	return tx.metaBucket.CreateBucketIfNotExists(key)
 }
 
 func (tx *transaction) DeleteTopLevelBucket(key []byte) error {
