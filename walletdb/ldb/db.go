@@ -1014,6 +1014,11 @@ func (db *db) Copy(w io.Writer) error {
 	return errors.New("Not implemented yet")
 }
 
+// Batch is required by the BatchDB interface
+func (db *db) Batch(fn func(tx walletdb.ReadWriteTx) error) error {
+	return walletdb.Update(db, fn)
+}
+
 // Close cleanly shuts down the database and syncs all data.  It will block
 // until all database transactions have been finalized (rolled back or
 // committed).
