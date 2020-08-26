@@ -1091,9 +1091,10 @@ func openDB(dbPath string, create bool) (walletdb.DB, error) {
 
 	// Open the metadata database (will create it if needed).
 	opts := opt.Options{
-		Strict:      opt.DefaultStrict,
-		Compression: opt.NoCompression,
-		Filter:      filter.NewBloomFilter(10),
+		Strict:          opt.DefaultStrict,
+		Compression:     opt.NoCompression,
+		Filter:          filter.NewBloomFilter(10),
+		OpenFilesCacher: opt.NoCacher,
 	}
 	ldb, err := leveldb.OpenFile(metadataDbPath, &opts)
 	if err != nil {
