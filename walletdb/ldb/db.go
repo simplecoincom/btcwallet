@@ -863,6 +863,16 @@ func (tx *transaction) ReadBucket(key []byte) walletdb.ReadBucket {
 	return tx.metaBucket.Bucket(key)
 }
 
+// ForEachBucket will iterate through all top level buckets.
+func (tx *transaction) ForEachBucket(fn func(key []byte) error) error {
+	return tx.metaBucket.ForEach(func(k, v []byte) error {
+		if v == nil || len(v) == 0 {
+			return fn(k)
+		}
+		return nil
+	})
+}
+
 func (tx *transaction) ReadWriteBucket(key []byte) walletdb.ReadWriteBucket {
 	return tx.metaBucket.Bucket(key)
 }
